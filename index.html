@@ -1,156 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Password Generator</title>
-        <!-- <link rel="stylesheet" href="style.css"> -->
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-                font-family: Arial, sans-serif;
-            }
 
-            body {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap: 0.8em;
-                height: 100vh;
-                background-color: #1e1e1e;
-            }
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Password Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 
-            .container {
-                display: flex;
-                flex-direction: column;
-                background-color: #222;
-                /* padding: 20px 40px; */
-                padding: 1em;
-                border-radius: 0.8em;
-                gap: 1em;
-                text-align: center;
-                width: 300px;
-                color: #fff;
-            }
-
-            h1 {
-                text-align: start;
-                font-size: 24px;
-                font-weight: bold;
-            }
-
-            .highlight {
-                color: #1ed760;
-            }
-
-            .subtitle {
-                text-align: start;
-                font-size: 14px;
-                color: #ccc;
-            }
-
-            .generate-btn {
-                padding: 0.6em;
-                background-color: #1ed760;
-                color: #fff;
-                border: none;
-                border-radius: 4px;
-                font-size: 16px;
-                cursor: pointer;
-                transition: background-color 0.3s;
-            }
-
-            .generate-btn:hover {
-                background-color: #19b94f;
-            }
-
-            .passwords {
-                display: flex;
-                flex-direction: column;
-                flex-grow: 1;
-                gap: 0.2em;
-                padding: 0.2em;
-                justify-content: space-between;
-                text-align: center;
-            }
-
-            .password-box {
-                display: flex;
-                justify-content: center;
-                align-self: center;
-                flex-grow: 1;
-                background-color: #333;
-                padding: 0.8em;
-                border-radius: 4px;
-                color: #1ed760;
-                font-family: monospace;
-                font-size: 14px;
-                font-weight: bold;
-                /* Make the font bold */
-                width: 100%;
-            }
-
-            .dark-mode-toggle {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                gap: 0.4em;
-                font-size: 14px;
-                color: #ccc;
-            }
-        </style>
-    </head>
-
-    <body>
-        <div class="container">
-            <h1>Generate a<br /><span class="highlight">random password</span></h1>
-            <p class="subtitle">Never use an insecure password again.</p>
-            <button class="generate-btn">Generate passwords</button>
-            <div class="passwords">
+<body>
+    <div class="container">
+        <h1>Generate a<br /><span class="highlight">random password</span></h1>
+        <p class="subtitle">Never use an insecure password again.</p>
+        <button class="generate-btn">Generate passwords</button>
+        <div class="passwords">
+            <div class="password-boxx">
                 <div class="password-box"></div>
+                <img src="./copy.svg" alt="Copy Icon" />
+            </div>
+            <div class="password-boxx">
                 <div class="password-box"></div>
+                <img src="./copy.svg" alt="Copy Icon" />
             </div>
         </div>
-        <div class="container">
-            <div class="dark-mode-toggle">
-                <label for="dark-mode">Dark Mode</label>
-                <input type="checkbox" id="dark-mode" />
-            </div>
+    </div>
+    <div class="container">
+        <div class="dark-mode-toggle">
+            <label for="theme">Change Theme</label>
+            <input type="checkbox" id="theme" />
         </div>
-        <script>
-            const characters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "~", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "-", "+", "=", "{", "[", "}", "]", ",", "|", ":", ";", "<", ">", ".", "?", "/"];
+    </div>
+    <script src="index.js"></script>
+</body>
 
-            // let getRange = document.querySelector('#range')
-            let genPass = document.querySelector(".generate-btn");
-            let passwordBox = document.querySelectorAll(".password-box");
-
-            passwordBox[0].textContent = "Pass";
-            passwordBox[1].textContent = "Pass";
-
-            // let showRange = document.querySelector('#show')
-
-            // getRange.addEventListener('change', () => {
-            //       showRange.textContent = getRange.value
-            // })
-
-            let passwords = (num) => {
-                let parse = "";
-                for (let i = 0; i < num; i++) {
-                    char = characters[Math.floor(Math.random() * characters.length)];
-                    if (!parse.includes(char)) {
-                        parse += char;
-                    }
-                }
-                return parse;
-            };
-
-            genPass.addEventListener("click", () => {
-                passwordBox[0].textContent = passwords(12);
-                passwordBox[1].textContent = passwords(12);
-            });
-        </script>
-    </body>
 </html>

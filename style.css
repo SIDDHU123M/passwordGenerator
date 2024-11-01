@@ -1,0 +1,134 @@
+:root {
+  --background-color: #1e1e1e;
+  --container-bg-color: #222;
+  --text-color: #fff;
+  --highlight-color: #1ed760;
+  --subtitle-color: #ccc;
+  --button-bg-color: #1ed760;
+  --button-hover-bg-color: #19b94f;
+  --password-bg-color: #333;
+}
+
+.light-mode {
+  --background-color: #f0f0f0;
+  --container-bg-color: #fff;
+  --text-color: #000;
+  --subtitle-color: #666;
+  --password-bg-color: #ddd;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8em;
+  height: 100vh;
+  background-color: var(--background-color);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--container-bg-color);
+  padding: 1em;
+  border-radius: 0.8em;
+  gap: 1em;
+  text-align: center;
+  width: 300px;
+  color: var(--text-color);
+}
+
+h1 {
+  text-align: start;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.highlight {
+  color: var(--highlight-color);
+}
+
+.subtitle {
+  text-align: start;
+  font-size: 14px;
+  color: var(--subtitle-color);
+}
+
+.generate-btn {
+  padding: 0.6em;
+  background-color: var(--button-bg-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.generate-btn:hover {
+  background-color: var(--button-hover-bg-color);
+}
+
+.passwords {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 0.2em;
+  padding: 0.2em;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.password-boxx {
+  display: flex;
+  justify-content: center;
+  background-color: var(--password-bg-color);
+  padding-right: 4px;
+  border-radius: 4px;
+}
+
+.password-box {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  flex-grow: 1;
+  background-color: var(--password-bg-color);
+  padding: 0.8em;
+  border-radius: 4px;
+  color: var(--highlight-color);
+  font-family: monospace;
+  font-size: 14px;
+  font-weight: bold;
+  width: 100%;
+  position: relative; /* Added for positioning the image */
+}
+
+img {
+  /* position: fixed; */
+  right: 10px;
+  top: 50%;
+  transform: translateY(-15%);
+  cursor: pointer;
+  width: 20px;
+}
+
+img:hover {
+  filter: invert(1);
+}
+
+.dark-mode-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.4em;
+  font-size: 14px;
+  color: var(--subtitle-color);
+}
