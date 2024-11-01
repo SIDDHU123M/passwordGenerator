@@ -8,6 +8,7 @@
     --button-hover-bg-color: #19b94f;
     --password-bg-color: #333;
     --img-filter: invert(1);
+    --img-hover-filter: invert(1); /* Added for light mode hover */
 }
 
 .light-mode {
@@ -17,6 +18,24 @@
     --subtitle-color: #666;
     --password-bg-color: #ddd;
     --img-filter: invert(0);
+    --img-hover-filter: invert(0.5); /* Added for light mode hover */
+}
+
+.previous-passwords {
+    display: flex;
+    flex-direction: column;
+    margin: auto 0;
+    gap: 0.2em;
+    color: var(--text-color);
+    border-radius: 0.8em;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+img:hover {
+    filter: var(--img-hover-filter); /* Updated to use the new variable */
 }
 
 * {
@@ -78,13 +97,6 @@ h1 {
     text-align: start;
     font-size: 14px;
     color: var(--subtitle-color);
-}
-
-.light-mode img {
-    filter: invert(0.5);
-}
-.light-mode img:hover {
-    filter: invert(0);
 }
 
 .generate-btn {
@@ -159,20 +171,6 @@ img:hover {
     gap: 0.4em;
     font-size: 14px;
     color: var(--subtitle-color);
-}
-
-.previous-passwords {
-    display: flex;
-    flex-direction: column;
-    margin: auto 0;
-    gap: 0.2em;
-    /* padding: 0.8em; */
-    color: var(--text-color);
-    border-radius: 0.8em;
-    overflow: hidden;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
 }
 
 .password-list {
