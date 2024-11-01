@@ -95,6 +95,7 @@ const characters = [
 let genPass = document.querySelector(".generate-btn");
 let passwordBox = document.querySelectorAll(".password-box");
 let theme = document.querySelector("#theme");
+let prevPass = document.querySelector(".previous-passwords");
 
 passwordBox[0].textContent = "Pass";
 passwordBox[1].textContent = "Pass";
@@ -114,20 +115,49 @@ genPass.addEventListener("click", () => {
   passwordBox[1].textContent = passwords(12);
 });
 
+let copiedPasswords = JSON.parse(localStorage.getItem("copiedPasswords")) || [];
+
+const updatePrevPass = () => {
+  prevPass.innerHTML = copiedPasswords
+    .map((pass) => `<div>${pass}</div>`)
+    .join("");
+};
+
+updatePrevPass();
+
 document.querySelectorAll(".password-boxx img").forEach((img) => {
   img.addEventListener("click", () => {
     let box = img.parentElement.querySelector(".password-box");
     navigator.clipboard.writeText(box.textContent);
+
+    if (
+      copiedPasswords.includes(box.textContent) ||
+      box.textContent === "Pass"
+    ) {
+      return 0;
+    } else {
+      if (copiedPasswords.length === 5) {
+        copiedPasswords.shift();
+      }
+      copiedPasswords.push(box.textContent);
+    }
+
+    localStorage.setItem("copiedPasswords", JSON.stringify(copiedPasswords));
+    updatePrevPass();
 
     img.src = "tick.svg";
     img.style.filter = "invert(1)";
     setTimeout(() => {
       img.src = "copy.svg";
       img.style.filter = "invert(0)";
-    }, 2000);
+    }, 1000);
   });
 });
 
 theme.addEventListener("change", () => {
   document.body.classList.toggle("light-mode");
+});
+
+document.body.addEventListener("change", () => {
+  prevPass.textContent = JSON.parse(localStorage.getItem("copiedPasswords"));
 });

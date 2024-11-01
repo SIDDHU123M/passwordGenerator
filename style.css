@@ -141,3 +141,20 @@ img:hover {
   font-size: 14px;
   color: var(--subtitle-color);
 }
+
+.previous-passwords {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 0.2em;
+  padding: 0.8em;
+  color: var(--text-color);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.bigContainer {
+  display: flex;
+  gap: 1em;
+}
