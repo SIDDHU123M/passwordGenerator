@@ -1,185 +1,256 @@
 :root {
-    --background-color: #1e1e1e;
-    --container-bg-color: #222;
-    --text-color: #fff;
-    --highlight-color: #1ed760;
-    --subtitle-color: #ccc;
-    --button-bg-color: #1ed760;
-    --button-hover-bg-color: #19b94f;
-    --password-bg-color: #333;
-    --img-filter: invert(1);
-    --img-hover-filter: invert(1); /* Added for light mode hover */
+  --background-color: #1e1e1e;
+  --container-bg-color: #222;
+  --text-color: #fff;
+  --highlight-color: #1ed760;
+  --subtitle-color: #ccc;
+  --button-bg-color: #1ed760;
+  --button-hover-bg-color: #19b94f;
+  --password-bg-color: #333;
+  --img-filter: invert(1);
+  --img-hover-filter: invert(1); /* Added for light mode hover */
 }
 
 .light-mode {
-    --background-color: #f0f0f0;
-    --container-bg-color: #fff;
-    --text-color: #000;
-    --subtitle-color: #666;
-    --password-bg-color: #ddd;
-    --img-filter: invert(0);
-    --img-hover-filter: invert(0.5); /* Added for light mode hover */
+  --background-color: #f0f0f0;
+  --container-bg-color: #fff;
+  --text-color: #000;
+  --subtitle-color: #666;
+  --password-bg-color: #ddd;
+  --img-filter: invert(0);
+  --img-hover-filter: invert(0.5); /* Added for light mode hover */
 }
 
 .previous-passwords {
-    display: flex;
-    flex-direction: column;
-    margin: auto 0;
-    gap: 0.2em;
-    color: var(--text-color);
-    border-radius: 0.8em;
-    overflow: hidden;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  margin: auto 0;
+  gap: 0.2em;
+  color: var(--text-color);
+  border-radius: 0.8em;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 img:hover {
-    filter: var(--img-hover-filter); /* Updated to use the new variable */
+  filter: var(--img-hover-filter); /* Updated to use the new variable */
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 0.8em;
-    height: 100vh;
-    background-color: var(--background-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8em;
+  height: 100vh;
+  background-color: var(--background-color);
 }
 
 .bigContainer {
-    display: flex;
-    gap: 1em;
+  display: flex;
+  gap: 1em;
 }
 @media (max-width: 767px) {
-    .bigContainer {
-        flex-direction: column;
-    }
+  .bigContainer {
+    flex-direction: column;
+  }
 }
 @media (min-width: 768px) {
-    .bigContainer {
-        flex-direction: row;
-    }
+  .bigContainer {
+    flex-direction: row;
+  }
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
-    background-color: var(--container-bg-color);
-    padding: 0.8em;
-    border-radius: 1.6em;
-    gap: 0.8em;
-    text-align: center;
-    width: 300px;
-    color: var(--text-color);
-    border: #444444 2px solid;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--container-bg-color);
+  padding: 0.8em;
+  border-radius: 1.6em;
+  gap: 0.8em;
+  text-align: center;
+  width: 300px;
+  color: var(--text-color);
+  border: #444444 2px solid;
 }
 
 h1 {
-    text-align: start;
-    font-size: 24px;
-    font-weight: bold;
+  text-align: start;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .highlight {
-    color: var(--highlight-color);
+  color: var(--highlight-color);
 }
 
 .subtitle {
-    text-align: start;
-    font-size: 14px;
-    color: var(--subtitle-color);
+  text-align: start;
+  font-size: 14px;
+  color: var(--subtitle-color);
 }
 
 .generate-btn {
-    padding: 0.6em;
-    background-color: var(--button-bg-color);
-    color: var(--text-color);
-    border: none;
-    border-radius: 0.8em;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  padding: 0.6em;
+  background-color: var(--button-bg-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 0.8em;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .generate-btn:hover {
-    background-color: var(--button-hover-bg-color);
+  background-color: var(--button-hover-bg-color);
 }
 
 .passwords {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    gap: 0.2em;
-    /* padding: 0.2em; */
-    border-radius: 0.8em;
-    overflow: hidden;
-    justify-content: space-between;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 0.2em;
+  /* padding: 0.2em; */
+  border-radius: 0.8em;
+  overflow: hidden;
+  justify-content: space-between;
+  text-align: center;
 }
 
 .password-boxx {
-    display: flex;
-    justify-content: center;
-    background-color: var(--password-bg-color);
-    padding-right: 4px;
-    border-radius: 0.4em;
-    overflow: hidden;
+  display: flex;
+  justify-content: center;
+  background-color: var(--password-bg-color);
+  padding-right: 4px;
+  border-radius: 0.4em;
+  overflow: hidden;
 }
 
 .password-box {
-    display: flex;
-    justify-content: center;
-    align-self: center;
-    flex-grow: 1;
-    background-color: var(--password-bg-color);
-    padding: 0.8em;
-    /* border-radius: 0.4em; */
-    color: var(--highlight-color);
-    font-family: monospace;
-    font-size: 14px;
-    font-weight: bold;
-    width: 100%;
-    position: relative; /* Added for positioning the image */
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  flex-grow: 1;
+  background-color: var(--password-bg-color);
+  padding: 0.8em;
+  /* border-radius: 0.4em; */
+  color: var(--highlight-color);
+  font-family: monospace;
+  font-size: 14px;
+  font-weight: bold;
+  width: 100%;
+  position: relative; /* Added for positioning the image */
 }
 
 img {
-    /* position: fixed; */
-    right: 10px;
-    top: 50%;
-    transform: translateY(-15%);
-    cursor: pointer;
-    width: 20px;
+  /* position: fixed; */
+  right: 10px;
+  top: 50%;
+  transform: translateY(-15%);
+  cursor: pointer;
+  width: 20px;
 }
 
 img:hover {
-    filter: var(--img-filter);
-}
-
-.dark-mode-toggle {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 0.4em;
-    font-size: 14px;
-    color: var(--subtitle-color);
+  filter: var(--img-filter);
 }
 
 .password-list {
-    display: flex;
-    width: 100%;
-    background-color: var(--password-bg-color);
-    padding: 0.6em;
-    border-radius: 0.4em;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+  display: flex;
+  width: 100%;
+  background-color: var(--password-bg-color);
+  padding: 0.6em;
+  border-radius: 0.4em;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+#hint {
+  font-size: 12px;
+  color: var(--subtitle-color);
+  /* text-align: center; */
+  /* justify-content: end; */
+  /* align-items: center; */
+  /* display: block; */
+  /* width: 100%; */
+}
+
+.dark-mode-toggle {
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  gap: 0.8em;
+  font-size: 14px;
+  color: var(--subtitle-color);
+}
+
+.dark-mode-toggle input[type="checkbox"] {
+  display: none;
+}
+
+.dark-mode-toggle label {
+  cursor: pointer;
+}
+
+.dark-mode-toggle .toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+  background-color: #ccc;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.dark-mode-toggle .toggle-switch::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+.dark-mode-toggle input[type="checkbox"]:checked + .toggle-switch {
+  background-color: var(--highlight-color);
+}
+
+.dark-mode-toggle input[type="checkbox"]:checked + .toggle-switch::after {
+  transform: translateX(20px);
+}
+
+#deleteLS,
+#hide {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  padding-top: 0.3em;
+}
+
+#deleteLS img,
+#hide img {
+  width: 20px;
+  height: 20px;
+  filter: var(--img-filter);
+  transition: filter 0.3s;
+}
+
+#deleteLS img:hover,
+#hide img:hover {
+  filter: var(--img-hover-filter);
 }

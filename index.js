@@ -92,16 +92,19 @@ const characters = [
   "/",
 ];
 
-let genPass = document.querySelector(".generate-btn");
-let passwordBox = document.querySelectorAll(".password-box");
-let theme = document.querySelector("#theme");
-let prevPass = document.querySelector(".previous-passwords");
+const genPass = document.querySelector(".generate-btn");
+const passwordBoxes = document.querySelectorAll(".password-box");
+const theme = document.querySelector("#theme");
+const prevPass = document.querySelector(".previous-passwords");
+const hint = document.querySelector("#hint");
+const hide = document.querySelector("#hide");
+const bigContainer = document.querySelector(".bigContainer");
+const deleteLS = document.querySelector("#deleteLS");
 
-passwordBox[0].textContent = "Pass";
-passwordBox[1].textContent = "Pass";
+passwordBoxes.forEach((box) => (box.textContent = "Pass"));
 
 const updatePassList = () => {
-  passList = document.querySelectorAll(".password-list");
+  const passList = document.querySelectorAll(".password-list");
   passList.forEach((pass) => {
     pass.addEventListener("click", () => {
       navigator.clipboard.writeText(pass.textContent);
@@ -109,51 +112,64 @@ const updatePassList = () => {
   });
 };
 
-let passwords = (num) => {
-  let parse = "";
-  for (let i = 0; i < num; i++) {
-    char = characters[Math.floor(Math.random() * characters.length)];
-    if (!parse.includes(char)) {
-      parse += char;
+const generatePassword = (length) => {
+  let password = "";
+  while (password.length < length) {
+    const char = characters[Math.floor(Math.random() * characters.length)];
+    if (!password.includes(char)) {
+      password += char;
     }
   }
-  return parse;
+  return password;
 };
+
 genPass.addEventListener("click", () => {
-  passwordBox[0].textContent = passwords(12);
-  passwordBox[1].textContent = passwords(12);
+  passwordBoxes.forEach((box) => (box.textContent = generatePassword(12)));
 });
 
 let copiedPasswords = JSON.parse(localStorage.getItem("copiedPasswords")) || [];
 
+const escapeHtml = (unsafe) => {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+};
+
+hint.style.display = "block";
+
 const updatePrevPass = () => {
   prevPass.innerHTML = copiedPasswords
-    .map((pass) => `<div class="password-list">${pass}</div>`)
+    .map((pass) => `<div class="password-list">${escapeHtml(pass)}</div>`)
     .join("");
+  if (JSON.parse(localStorage.getItem("copiedPasswords"))) {
+    hint.style.display = "none";
+  }
 };
 
 updatePrevPass();
 
-document.querySelectorAll(".password-boxx img").forEach((img) => {
-  img.addEventListener("click", () => {
-    let box = img.parentElement.querySelector(".password-box");
-    navigator.clipboard.writeText(box.textContent);
+document.body.addEventListener("change", updatePrevPass);
 
-    if (
-      copiedPasswords.includes(box.textContent) ||
-      box.textContent === "Pass"
-    ) {
-      return;
-    } else {
+document.body.addEventListener("click", (event) => {
+  if (event.target.matches(".password-boxx img")) {
+    const img = event.target;
+    const box = img.parentElement.querySelector(".password-box");
+    const password = box.textContent;
+
+    navigator.clipboard.writeText(password);
+
+    if (!copiedPasswords.includes(password) && password !== "Pass") {
       if (copiedPasswords.length === 5) {
         copiedPasswords.shift();
       }
-      copiedPasswords.push(box.textContent);
+      copiedPasswords.push(password);
+      localStorage.setItem("copiedPasswords", JSON.stringify(copiedPasswords));
+      updatePrevPass();
+      updatePassList();
     }
-
-    localStorage.setItem("copiedPasswords", JSON.stringify(copiedPasswords));
-    updatePrevPass();
-    updatePassList();
 
     img.src = "tick.svg";
     img.style.filter = "invert(1)";
@@ -161,13 +177,55 @@ document.querySelectorAll(".password-boxx img").forEach((img) => {
       img.src = "copy.svg";
       img.style.filter = "invert(0)";
     }, 1000);
-  });
+  }
 });
 
 theme.addEventListener("change", () => {
   document.body.classList.toggle("light-mode");
 });
 
-document.body.addEventListener("change", () => {
+let remeberHide = JSON.parse(localStorage.getItem("remeberHide")) || false;
+
+if (!remeberHide) {
+  prevPass.style.display = prevPass.style.display === "none" ? "flex" : "none";
+  document.querySelector("#srcHide").src = remeberHide
+    ? "hide.svg"
+    : "show.svg";
+  if (window.matchMedia("(max-width: 767)").matches) {
+    bigContainer.style.flexDirection = "column";
+  } else if (window.matchMedia("(min-width: 768px)").matches) {
+    bigContainer.style.flexDirection =
+      bigContainer.style.flexDirection === "column" ? "row" : "column";
+  }
+  hint.style.display = "none";
+}
+
+hide.addEventListener("click", () => {
+  document.querySelector("#srcHide").src = remeberHide
+    ? "show.svg"
+    : "hide.svg";
+  prevPass.style.display = prevPass.style.display === "none" ? "flex" : "none";
+  if (window.matchMedia("(max-width: 767)").matches) {
+    bigContainer.style.flexDirection = "column";
+  } else if (window.matchMedia("(min-width: 768px)").matches) {
+    bigContainer.style.flexDirection =
+      bigContainer.style.flexDirection === "column" ? "row" : "column";
+  }
+  hint.style.display = "none";
+
+  remeberHide = !remeberHide;
+  localStorage.setItem("remeberHide", JSON.stringify(remeberHide));
+});
+
+deleteLS.addEventListener("click", () => {
+  localStorage.removeItem("copiedPasswords");
+  copiedPasswords = [];
   updatePrevPass();
+  if (!remeberHide) {
+    hide.style.display = "block";
+  }
+  document.querySelector("#deleted").src = "tick.svg";
+  setTimeout(() => {
+    document.querySelector("#deleted").src = "delete.svg";
+  }, 1500);
 });

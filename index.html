@@ -1,36 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Password Generator</title>
-        <link rel="stylesheet" href="style.css" />
-    </head>
-    <body>
-        <div class="bigContainer">
-            <div class="container">
-                <h1>Generate a<br /><span class="highlight">random password</span></h1>
-                <p class="subtitle">Never use an insecure password again.</p>
-                <button class="generate-btn">Generate passwords</button>
-                <div class="passwords">
-                    <div class="password-boxx">
-                        <div class="password-box"></div>
-                        <img src="./copy.svg" alt="Copy Icon" />
-                    </div>
-                    <div class="password-boxx">
-                        <div class="password-box"></div>
-                        <img src="./copy.svg" alt="Copy Icon" />
-                    </div>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Password Generator</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div class="bigContainer">
+        <div class="container">
+            <h1>Generate a<br /><span class="highlight">random password</span></h1>
+            <p class="subtitle">Never use an insecure password again.</p>
+            <button class="generate-btn">Generate passwords</button>
+            <div class="passwords">
+                <div class="password-boxx">
+                    <div class="password-box"></div>
+                    <img src="./copy.svg" alt="Copy Icon" />
                 </div>
-            </div>
-            <div class="container">
-                <div class="dark-mode-toggle">
-                    <label for="theme">Change Theme</label>
-                    <input type="checkbox" id="theme" />
+                <div class="password-boxx">
+                    <div class="password-box"></div>
+                    <img src="./copy.svg" alt="Copy Icon" />
                 </div>
-                <div class="previous-passwords"></div>
             </div>
         </div>
-        <script async src="index.js"></script>
-    </body>
+        <div class="container">
+            <div class="dark-mode-toggle">
+                <label for="theme">Change Theme</label>
+                <input type="checkbox" id="theme" />
+                <label for="theme" class="toggle-switch"></label>
+
+                <button id="hide"><img id='srcHide' src="hide.svg" alt="hide"></button>
+                <button id="deleteLS"><img id="deleted" src="delete.svg" alt="delete"></button>
+            </div>
+            <div class="previous-passwords"></div>
+            <h4 id="hint">Copy passwords to see something</h4>
+        </div>
+    </div>
+    <script async src="index.js"></script>
+</body>
+
 </html>
