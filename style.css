@@ -9,6 +9,9 @@
   --password-bg-color: #333;
   --img-filter: invert(1);
   --img-hover-filter: invert(1); /* Added for light mode hover */
+  --option-bg-color: #444;
+  --option-selected-bg-color: #1ed760;
+  --option-selected-text-color: #000;
 }
 
 .light-mode {
@@ -19,6 +22,9 @@
   --password-bg-color: #ddd;
   --img-filter: invert(0);
   --img-hover-filter: invert(0.5); /* Added for light mode hover */
+  --option-bg-color: #ddd;
+  --option-selected-bg-color: #1ed760;
+  --option-selected-text-color: #fff;
 }
 
 .previous-passwords {
@@ -119,7 +125,6 @@ h1 {
   flex-direction: column;
   flex-grow: 1;
   gap: 0.2em;
-  /* padding: 0.2em; */
   border-radius: 0.8em;
   overflow: hidden;
   justify-content: space-between;
@@ -142,7 +147,6 @@ h1 {
   flex-grow: 1;
   background-color: var(--password-bg-color);
   padding: 0.8em;
-  /* border-radius: 0.4em; */
   color: var(--highlight-color);
   font-family: monospace;
   font-size: 14px;
@@ -152,7 +156,6 @@ h1 {
 }
 
 img {
-  /* position: fixed; */
   right: 10px;
   top: 50%;
   transform: translateY(-15%);
@@ -251,8 +254,8 @@ img:hover {
 }
 
 #options {
-  display: flex;
-  /* flex-wrap: wrap; */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 0.5em;
   margin-bottom: 1em;
 }
@@ -260,13 +263,23 @@ img:hover {
 #options label {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.3em;
   color: var(--text-color);
-  width: 50%;
+  background-color: var(--option-bg-color);
+  padding: 0.4em;
+  border-radius: 0.4em;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 #options input[type="checkbox"] {
-  margin: 0;
+  display: none;
+}
+
+#options input[type="checkbox"]:checked + label {
+  background-color: var(--option-selected-bg-color);
+  color: var(--option-selected-text-color);
 }
 
 .fix-padding {

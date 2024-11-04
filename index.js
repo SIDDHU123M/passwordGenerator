@@ -27,7 +27,9 @@ const updatePassList = () => {
   const passList = document.querySelectorAll(".password-list");
   passList.forEach((pass) => {
     pass.addEventListener("click", () => {
-      navigator.clipboard.writeText(pass.textContent);
+      navigator.clipboard.writeText(pass.textContent).catch((err) => {
+        console.error("Failed to copy text: ", err);
+      });
     });
   });
 };
@@ -53,9 +55,11 @@ const generatePassword = (length) => {
   return password;
 };
 
-genPass.addEventListener("click", () => {
+const handleGeneratePassword = () => {
   passwordBoxes.forEach((box) => (box.textContent = generatePassword(12)));
-});
+};
+
+genPass.addEventListener("click", handleGeneratePassword);
 
 let copiedPasswords = JSON.parse(localStorage.getItem("copiedPasswords")) || [];
 
@@ -74,77 +78,91 @@ const updatePrevPass = () => {
   prevPass.innerHTML = copiedPasswords
     .map((pass) => `<div class="password-list">${escapeHtml(pass)}</div>`)
     .join("");
-  if (JSON.parse(localStorage.getItem("copiedPasswords"))) {
-    hint.style.display = "none";
-  }
+
+  hint.style.display = copiedPasswords.length > 0 ? "none" : "block";
 };
 
 updatePrevPass();
 
 document.body.addEventListener("change", updatePrevPass);
 
-document.body.addEventListener("click", (event) => {
+const handlePasswordCopy = (event) => {
   if (event.target.matches(".password-boxx img")) {
     const img = event.target;
     const box = img.parentElement.querySelector(".password-box");
     const password = box.textContent;
 
-    navigator.clipboard.writeText(password);
+    navigator.clipboard
+      .writeText(password)
+      .then(() => {
+        if (
+          !copiedPasswords.includes(password) &&
+          password !== "Pass" &&
+          password !== "Select options"
+        ) {
+          if (copiedPasswords.length === 5) {
+            copiedPasswords.shift();
+          }
+          copiedPasswords.push(password);
+          localStorage.setItem(
+            "copiedPasswords",
+            JSON.stringify(copiedPasswords)
+          );
+          updatePrevPass();
+          updatePassList();
+        }
 
-    if (!copiedPasswords.includes(password) && password !== "Pass") {
-      if (copiedPasswords.length === 5) {
-        copiedPasswords.shift();
-      }
-      copiedPasswords.push(password);
-      localStorage.setItem("copiedPasswords", JSON.stringify(copiedPasswords));
-      updatePrevPass();
-      updatePassList();
-    }
-
-    img.src = "tick.svg";
-    img.style.filter = "invert(1)";
-    setTimeout(() => {
-      img.src = "copy.svg";
-      img.style.filter = "invert(0)";
-    }, 1000);
+        img.src = "tick.svg";
+        img.style.filter = "invert(1)";
+        setTimeout(() => {
+          img.src = "copy.svg";
+          img.style.filter = "invert(0)";
+        }, 1000);
+      })
+      .catch((err) => {
+        console.error("Failed to copy text: ", err);
+      });
   }
-});
+};
+
+document.body.addEventListener("click", handlePasswordCopy);
 
 theme.addEventListener("change", () => {
   document.body.classList.toggle("light-mode");
 });
 
-let remeberHide = JSON.parse(localStorage.getItem("remeberHide")) || true;
-
-if (remeberHide) {
-  prevPass.style.display = prevPass.style.display === "none" ? "flex" : "none";
-  document.querySelector("#srcHide").src = remeberHide
-    ? "show.svg"
-    : "hide.svg";
-  if (window.matchMedia("(max-width: 767)").matches) {
-    bigContainer.style.flexDirection = "column";
-  } else if (window.matchMedia("(min-width: 768px)").matches) {
-    bigContainer.style.flexDirection =
-      bigContainer.style.flexDirection === "column" ? "row" : "column";
-  }
-  hint.style.display = "none";
+let rememberHide = JSON.parse(localStorage.getItem("rememberHide"));
+if (rememberHide === null) {
+  rememberHide = true;
 }
 
-hide.addEventListener("click", () => {
-  document.querySelector("#srcHide").src = remeberHide
-    ? "hide.svg"
-    : "show.svg";
-  prevPass.style.display = prevPass.style.display === "none" ? "flex" : "none";
-  if (window.matchMedia("(max-width: 767)").matches) {
+const updateHideState = () => {
+  const srcHide = document.querySelector("#srcHide");
+  const prevPassDisplay = rememberHide ? "none" : "flex";
+  const srcHideImg = rememberHide ? "show.svg" : "hide.svg";
+
+  prevPass.style.display = prevPassDisplay;
+  srcHide.src = srcHideImg;
+
+  if (window.matchMedia("(max-width: 767px)").matches) {
     bigContainer.style.flexDirection = "column";
   } else if (window.matchMedia("(min-width: 768px)").matches) {
-    bigContainer.style.flexDirection =
-      bigContainer.style.flexDirection === "column" ? "row" : "column";
+    bigContainer.style.flexDirection = rememberHide ? "column" : "row";
   }
-  hint.style.display = "none";
 
-  remeberHide = !remeberHide;
-  localStorage.setItem("remeberHide", JSON.stringify(remeberHide));
+  hint.style.display = rememberHide
+    ? "none"
+    : copiedPasswords.length > 0
+    ? "none"
+    : "block";
+};
+
+updateHideState();
+
+hide.addEventListener("click", () => {
+  rememberHide = !rememberHide;
+  localStorage.setItem("rememberHide", JSON.stringify(rememberHide));
+  updateHideState();
 });
 
 deleteLS.addEventListener("click", () => {
@@ -156,4 +174,8 @@ deleteLS.addEventListener("click", () => {
   setTimeout(() => {
     document.querySelector("#deleted").src = "delete.svg";
   }, 1500);
+
+  if (rememberHide) {
+    hint.style.display = "none";
+  }
 });
