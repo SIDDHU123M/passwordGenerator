@@ -1,96 +1,9 @@
-const characters = [
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "H",
-  "I",
-  "J",
-  "K",
-  "L",
-  "M",
-  "N",
-  "O",
-  "P",
-  "Q",
-  "R",
-  "S",
-  "T",
-  "U",
-  "V",
-  "W",
-  "X",
-  "Y",
-  "Z",
-  "a",
-  "b",
-  "c",
-  "d",
-  "e",
-  "f",
-  "g",
-  "h",
-  "i",
-  "j",
-  "k",
-  "l",
-  "m",
-  "n",
-  "o",
-  "p",
-  "q",
-  "r",
-  "s",
-  "t",
-  "u",
-  "v",
-  "w",
-  "x",
-  "y",
-  "z",
-  "0",
-  "1",
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-  "~",
-  "`",
-  "!",
-  "@",
-  "#",
-  "$",
-  "%",
-  "^",
-  "&",
-  "*",
-  "(",
-  ")",
-  "_",
-  "-",
-  "+",
-  "=",
-  "{",
-  "[",
-  "}",
-  "]",
-  ",",
-  "|",
-  ":",
-  ";",
-  "<",
-  ">",
-  ".",
-  "?",
-  "/",
-];
+const characters = {
+  uppercase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+  lowercase: "abcdefghijklmnopqrstuvwxyz",
+  numbers: "0123456789",
+  symbols: "~`!@#$%^&*()_-+={[}]|:;<>,.?/",
+};
 
 const genPass = document.querySelector(".generate-btn");
 const passwordBoxes = document.querySelectorAll(".password-box");
@@ -100,6 +13,13 @@ const hint = document.querySelector("#hint");
 const hide = document.querySelector("#hide");
 const bigContainer = document.querySelector(".bigContainer");
 const deleteLS = document.querySelector("#deleteLS");
+
+const options = {
+  uppercase: document.querySelector("#uppercase"),
+  lowercase: document.querySelector("#lowercase"),
+  numbers: document.querySelector("#numbers"),
+  symbols: document.querySelector("#symbols"),
+};
 
 passwordBoxes.forEach((box) => (box.textContent = "Pass"));
 
@@ -114,11 +34,21 @@ const updatePassList = () => {
 
 const generatePassword = (length) => {
   let password = "";
+  let availableCharacters = "";
+
+  if (options.uppercase.checked) availableCharacters += characters.uppercase;
+  if (options.lowercase.checked) availableCharacters += characters.lowercase;
+  if (options.numbers.checked) availableCharacters += characters.numbers;
+  if (options.symbols.checked) availableCharacters += characters.symbols;
+
+  if (availableCharacters.length === 0) return "Select options";
+
   while (password.length < length) {
-    const char = characters[Math.floor(Math.random() * characters.length)];
-    if (!password.includes(char)) {
-      password += char;
-    }
+    const char =
+      availableCharacters[
+        Math.floor(Math.random() * availableCharacters.length)
+      ];
+    password += char;
   }
   return password;
 };
@@ -184,13 +114,13 @@ theme.addEventListener("change", () => {
   document.body.classList.toggle("light-mode");
 });
 
-let remeberHide = JSON.parse(localStorage.getItem("remeberHide")) || false;
+let remeberHide = JSON.parse(localStorage.getItem("remeberHide")) || true;
 
-if (!remeberHide) {
+if (remeberHide) {
   prevPass.style.display = prevPass.style.display === "none" ? "flex" : "none";
   document.querySelector("#srcHide").src = remeberHide
-    ? "hide.svg"
-    : "show.svg";
+    ? "show.svg"
+    : "hide.svg";
   if (window.matchMedia("(max-width: 767)").matches) {
     bigContainer.style.flexDirection = "column";
   } else if (window.matchMedia("(min-width: 768px)").matches) {
@@ -202,8 +132,8 @@ if (!remeberHide) {
 
 hide.addEventListener("click", () => {
   document.querySelector("#srcHide").src = remeberHide
-    ? "show.svg"
-    : "hide.svg";
+    ? "hide.svg"
+    : "show.svg";
   prevPass.style.display = prevPass.style.display === "none" ? "flex" : "none";
   if (window.matchMedia("(max-width: 767)").matches) {
     bigContainer.style.flexDirection = "column";
@@ -218,12 +148,10 @@ hide.addEventListener("click", () => {
 });
 
 deleteLS.addEventListener("click", () => {
+  hide.style.display = "block";
   localStorage.removeItem("copiedPasswords");
   copiedPasswords = [];
   updatePrevPass();
-  if (!remeberHide) {
-    hide.style.display = "block";
-  }
   document.querySelector("#deleted").src = "tick.svg";
   setTimeout(() => {
     document.querySelector("#deleted").src = "delete.svg";

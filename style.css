@@ -178,16 +178,11 @@ img:hover {
 #hint {
   font-size: 12px;
   color: var(--subtitle-color);
-  /* text-align: center; */
-  /* justify-content: end; */
-  /* align-items: center; */
-  /* display: block; */
-  /* width: 100%; */
 }
 
 .dark-mode-toggle {
   display: flex;
-  /* align-items: center; */
+  align-items: center;
   justify-content: center;
   gap: 0.8em;
   font-size: 14px;
@@ -239,7 +234,7 @@ img:hover {
   border: none;
   cursor: pointer;
   padding: 0;
-  padding-top: 0.3em;
+  padding-top: 0.7em;
 }
 
 #deleteLS img,
@@ -253,4 +248,31 @@ img:hover {
 #deleteLS img:hover,
 #hide img:hover {
   filter: var(--img-hover-filter);
+}
+
+#options {
+  display: flex;
+  /* flex-wrap: wrap; */
+  gap: 0.5em;
+  margin-bottom: 1em;
+}
+
+#options label {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+  color: var(--text-color);
+  width: 50%;
+}
+
+#options input[type="checkbox"] {
+  margin: 0;
+}
+
+.fix-padding {
+  padding: 0.2em;
+}
+
+.fix-padding:hover {
+  transform: scale(1.3);
 }

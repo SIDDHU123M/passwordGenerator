@@ -13,6 +13,19 @@
         <div class="container">
             <h1>Generate a<br /><span class="highlight">random password</span></h1>
             <p class="subtitle">Never use an insecure password again.</p>
+            <div id="options">
+                <input type="checkbox" id="uppercase" />
+                <label for="uppercase"> ABC </label>
+
+                <input type="checkbox" id="lowercase" />
+                <label for="lowercase"> abc </label>
+
+                <input type="checkbox" id="numbers" />
+                <label for="numbers"> 123 </label>
+
+                <input type="checkbox" id="symbols" />
+                <label for="symbols"> #$& </label>
+            </div>
             <button class="generate-btn">Generate passwords</button>
             <div class="passwords">
                 <div class="password-boxx">
@@ -31,8 +44,8 @@
                 <input type="checkbox" id="theme" />
                 <label for="theme" class="toggle-switch"></label>
 
-                <button id="hide"><img id='srcHide' src="hide.svg" alt="hide"></button>
-                <button id="deleteLS"><img id="deleted" src="delete.svg" alt="delete"></button>
+                <button id="hide" class="fix-padding"><img id='srcHide' src="hide.svg" alt="hide"></button>
+                <button id="deleteLS" class="fix-padding"><img id="deleted" src="delete.svg" alt="delete"></button>
             </div>
             <div class="previous-passwords"></div>
             <h4 id="hint">Copy passwords to see something</h4>
